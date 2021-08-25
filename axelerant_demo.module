@@ -1,0 +1,45 @@
+<?php
+
+
+/**
+ * @file
+ * This is my module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Implements hook_form_alter().
+ */
+function axelerant_demo_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'system_site_information_settings') {
+
+     $form['axelerant_demo_container'] = [
+        '#type' => 'details',
+        '#title' => t('Axelerant demo settings'),
+        '#open' => 1
+     ];  
+
+     $form['axelerant_demo_container']['site_api_key'] = [
+        '#type' => 'textfield',
+        '#title' => t('Site API Key'),
+        '#default_value' => (\Drupal::state()->get('siteapikey')) ? \Drupal::state()->get('siteapikey') : t('No API Key yet...'),
+     ];
+
+    $form['actions']['submit']['#value'] = t('Update Configuration'); 
+    $form['actions']['submit']['#submit'][] = 'axelerant_demo_save_data';
+    
+  }
+}
+
+/**
+ * Custom submit callback.
+ */
+function axelerant_demo_save_data(&$form, $form_state){
+    $site_api_key = $form_state->getValue('site_api_key');
+    \Drupal::state()->set('siteapikey', $site_api_key);
+    \Drupal::messenger()->addStatus(
+        t(htmlentities('Site API Key has been saved.'))
+      );
+}

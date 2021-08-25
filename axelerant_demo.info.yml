@@ -1,0 +1,6 @@
+name: Axelerant Demo
+description: An experimental module to build demo module.
+package: Custom
+type: module
+version: 1.0
+core: 8.x

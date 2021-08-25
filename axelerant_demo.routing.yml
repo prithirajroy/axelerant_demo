@@ -1,0 +1,7 @@
+axelarent_demo.json:
+  path: '/page_json/{api_key}/{nid}'
+  defaults:
+    _controller: '\Drupal\axelerant_demo\Controller\AxelerantDemoController::returnJSON'
+    _title: 'JSON representation of page content type.'
+  requirements:
+    _permission: 'access content'
